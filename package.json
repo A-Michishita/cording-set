@@ -1,0 +1,30 @@
+{
+  "name": "cording-set",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Gruntfile.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/A-Michishita/cording-set.git"
+  },
+  "author": "Akito Michishita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/A-Michishita/cording-set/issues"
+  },
+  "homepage": "https://github.com/A-Michishita/cording-set",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-compass": "^1.0.4",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-htmlmin": "^0.6.0",
+    "grunt-contrib-jade": "^0.15.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
