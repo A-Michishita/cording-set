@@ -1,7 +1,7 @@
-.swp
+*.swp
 
-.scssc
-.sassc
+*.scssc
+*.sassc
 .sass-cache/
 
 node_modules/
