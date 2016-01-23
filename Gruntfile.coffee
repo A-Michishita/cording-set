@@ -94,6 +94,12 @@ module.exports = (grunt) ->
     clean:
       deleteReleaseDir:
         src: 'release/'
+    copy:
+      font:
+        cwd:  'bin/font'
+        src:  '**/*.{eot,svg,ttf,woff,woff2}'
+        dest: 'release/font'
+        expand: true
     watch:
       coffee:
         files: "src/coffee/**/*.coffee"
@@ -150,6 +156,7 @@ module.exports = (grunt) ->
     grunt.registerTask 'default', ["browserSync:dev", "watch"]
     grunt.registerTask 'release', [
       'clean'
+      'copy'
       'jade'
       'coffee'
       'compass:pro'
