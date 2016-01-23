@@ -73,11 +73,12 @@ module.exports = (grunt) ->
           dest:   'bin/img/'
         ]
       pro:
-        files:
+        files: [
           expand: true
           cwd:    'src/img/'
-          src:    ['**/*.{png, jpg, gif}']
-          dest:   'releae/img/'
+          src:    ['**/*.{png,jpg,gif}']
+          dest:   'release/img/'
+        ]
     clean:
       deleteReleaseDir:
         src: 'release/'
@@ -120,4 +121,5 @@ module.exports = (grunt) ->
       'htmlmin'
       'concat'
       'uglify'
+      'image:pro'
     ]
