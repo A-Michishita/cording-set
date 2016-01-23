@@ -1,9 +1,6 @@
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON 'package.json'
   grunt.initConfig
-    clean:
-      deleteReleaseDir:
-        src: 'release/'
     compass:
       dev:
         options:
@@ -66,6 +63,24 @@ module.exports = (grunt) ->
         cwd:    'bin/'
         src:    ["**/*.html"]
         dest:   "release/"
+    
+    image:
+      dev:
+        files: [
+          expand: true
+          cwd:    'src/img/'
+          src:    ['**/*.{png,jpg,gif}']
+          dest:   'bin/img/'
+        ]
+      pro:
+        files:
+          expand: true
+          cwd:    'src/img/'
+          src:    ['**/*.{png, jpg, gif}']
+          dest:   'releae/img/'
+    clean:
+      deleteReleaseDir:
+        src: 'release/'
     watch:
       coffee:
         files: "src/coffee/**/*.coffee"
@@ -88,7 +103,11 @@ module.exports = (grunt) ->
       jade:
         files: "src/jade/**/*.jade"
         tasks: ["jade:dev"]
-    
+      image:
+        files: "src/img/**/*.{png,jpg,gif}"
+        tasks: ["image:dev"]
+
+
     for t of pkg.devDependencies
       if t.substring(0, 6) is 'grunt-'
         grunt.loadNpmTasks t
