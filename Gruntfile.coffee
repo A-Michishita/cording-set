@@ -34,15 +34,20 @@ module.exports = (grunt) ->
           '!bin/js/app.js'
         ],
         dest: 'bin/js/app.js'
+    cssmin:
+      default:
+        expand: true
+        cwd:    "bin/css/"
+        src:    'app.css'
+        dest:   'release/css/'
     uglify:
-      css:
-        src:  'bin/css/app.css',
-        dest: 'release/css/app.min.css'
-      js:
+      default:
         src:  'bin/js/app.js',
-        dest: 'release/js/app.min.js'
+        dest: 'release/js/app.js'
     jade:
       default:
+        options:
+          pretty: true
         files: [
           expand: true
           cwd:    "src/jade/"
@@ -63,7 +68,14 @@ module.exports = (grunt) ->
         cwd:    'bin/'
         src:    ["**/*.html"]
         dest:   "release/"
-    
+    autoprefixer:
+      options:
+        browsers: 'last 3 version'
+      file:
+        expand:   true
+        flatten:  true
+        src:      "bin/css/app.css"
+        dest:     'bin/css/'
     image:
       dev:
         files: [
@@ -73,18 +85,25 @@ module.exports = (grunt) ->
           dest:   'bin/img/'
         ]
       pro:
-        files:
+        files: [
           expand: true
           cwd:    'src/img/'
-          src:    ['**/*.{png, jpg, gif}']
-          dest:   'releae/img/'
+          src:    ['**/*.{png,jpg,gif}']
+          dest:   'release/img/'
+        ]
     clean:
       deleteReleaseDir:
         src: 'release/'
+    copy:
+      font:
+        cwd:  'bin/font'
+        src:  '**/*.{eot,svg,ttf,woff,woff2}'
+        dest: 'release/font'
+        expand: true
     watch:
       coffee:
         files: "src/coffee/**/*.coffee"
-        tasks: ["coffee:dev"]
+        tasks: ["coffee"]
       js:
         files: [
           "bin/js/**/*.js"
@@ -99,25 +118,53 @@ module.exports = (grunt) ->
           "bin/css/**/*.css"
           "!bin/css/**/app.css"
         ]
-        tasks: ["concat:css"]
+        tasks: ["concat:css","autoprefixer"]
       jade:
         files: "src/jade/**/*.jade"
-        tasks: ["jade:dev"]
+        tasks: ["jade"]
       image:
         files: "src/img/**/*.{png,jpg,gif}"
         tasks: ["image:dev"]
-
-
+    browserSync:
+      dev:
+        bsFiles:
+          src: 'bin/**/*'
+        options:
+          server: 'bin/'
+          watchTask: true
+      pro:
+        bsFiles:
+          src: 'release/**/*'
+        options:
+          server: 'release/'
+    parallelize:
+      options:
+        processes: 4
+      compass:  true
+      coffee:   true
+      concat:   true
+      cssmin:   true
+      uglify:   true
+      jade:     true
+      htmlmin:  true
+      image:    true
+    
     for t of pkg.devDependencies
       if t.substring(0, 6) is 'grunt-'
         grunt.loadNpmTasks t
 
+    grunt.registerTask 'default', ["browserSync:dev", "watch"]
     grunt.registerTask 'release', [
       'clean'
+      'copy'
       'jade'
       'coffee'
       'compass:pro'
       'htmlmin'
       'concat'
+      'autoprefixer'
       'uglify'
+      'cssmin'
+      'image:pro'
+      "browserSync:pro"
     ]
