@@ -100,6 +100,14 @@ module.exports = (grunt) ->
         src:  '**/*.{eot,svg,ttf,woff,woff2}'
         dest: 'release/font'
         expand: true
+    compress:
+      default:
+        options:
+          archive:  "build/archive_#{new Date().getTime()}.zip"
+          mode:     'zip'
+        expand: true
+        cwd:    './'
+        src:    'release/**/*'
     watch:
       coffee:
         files: "src/coffee/**/*.coffee"
@@ -166,5 +174,6 @@ module.exports = (grunt) ->
       'uglify'
       'cssmin'
       'image:pro'
+      'compress'
       "browserSync:pro"
     ]
