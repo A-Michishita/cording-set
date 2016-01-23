@@ -34,15 +34,20 @@ module.exports = (grunt) ->
           '!bin/js/app.js'
         ],
         dest: 'bin/js/app.js'
+    cssmin:
+      default:
+        expand: true
+        cwd:    "bin/css/"
+        src:    'app.css'
+        dest:   'release/css/'
     uglify:
-      css:
-        src:  'bin/css/app.css',
-        dest: 'release/css/app.min.css'
-      js:
+      default:
         src:  'bin/js/app.js',
-        dest: 'release/js/app.min.js'
+        dest: 'release/js/app.js'
     jade:
       default:
+        options:
+          pretty: true
         files: [
           expand: true
           cwd:    "src/jade/"
@@ -85,7 +90,7 @@ module.exports = (grunt) ->
     watch:
       coffee:
         files: "src/coffee/**/*.coffee"
-        tasks: ["coffee:dev"]
+        tasks: ["coffee"]
       js:
         files: [
           "bin/js/**/*.js"
@@ -103,16 +108,28 @@ module.exports = (grunt) ->
         tasks: ["concat:css"]
       jade:
         files: "src/jade/**/*.jade"
-        tasks: ["jade:dev"]
+        tasks: ["jade"]
       image:
         files: "src/img/**/*.{png,jpg,gif}"
         tasks: ["image:dev"]
-
+    browserSync:
+      dev:
+        bsFiles:
+          src: 'bin/**/*'
+        options:
+          server: 'bin/'
+          watchTask: true
+      pro:
+        bsFiles:
+          src: 'release/**/*'
+        options:
+          server: 'release/'
 
     for t of pkg.devDependencies
       if t.substring(0, 6) is 'grunt-'
         grunt.loadNpmTasks t
 
+    grunt.registerTask 'default', ["browserSync:dev", "watch"]
     grunt.registerTask 'release', [
       'clean'
       'jade'
@@ -121,5 +138,7 @@ module.exports = (grunt) ->
       'htmlmin'
       'concat'
       'uglify'
+      'cssmin'
       'image:pro'
+      "browserSync:pro"
     ]
