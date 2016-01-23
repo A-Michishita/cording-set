@@ -124,6 +124,17 @@ module.exports = (grunt) ->
           src: 'release/**/*'
         options:
           server: 'release/'
+    parallelize:
+      options:
+        processes: 4
+      compass:  true
+      coffee:   true
+      concat:   true
+      cssmin:   true
+      uglify:   true
+      jade:     true
+      htmlmin:  true
+      image:    true
 
     for t of pkg.devDependencies
       if t.substring(0, 6) is 'grunt-'
