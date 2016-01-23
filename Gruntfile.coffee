@@ -68,7 +68,14 @@ module.exports = (grunt) ->
         cwd:    'bin/'
         src:    ["**/*.html"]
         dest:   "release/"
-    
+    autoprefixer:
+      options:
+        browsers: 'last 3 version'
+      file:
+        expand:   true
+        flatten:  true
+        src:      "bin/css/app.css"
+        dest:     'bin/css/'
     image:
       dev:
         files: [
@@ -105,7 +112,7 @@ module.exports = (grunt) ->
           "bin/css/**/*.css"
           "!bin/css/**/app.css"
         ]
-        tasks: ["concat:css"]
+        tasks: ["concat:css","autoprefixer"]
       jade:
         files: "src/jade/**/*.jade"
         tasks: ["jade"]
@@ -135,7 +142,7 @@ module.exports = (grunt) ->
       jade:     true
       htmlmin:  true
       image:    true
-
+    
     for t of pkg.devDependencies
       if t.substring(0, 6) is 'grunt-'
         grunt.loadNpmTasks t
@@ -148,6 +155,7 @@ module.exports = (grunt) ->
       'compass:pro'
       'htmlmin'
       'concat'
+      'autoprefixer'
       'uglify'
       'cssmin'
       'image:pro'
