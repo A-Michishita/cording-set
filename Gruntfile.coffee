@@ -133,7 +133,7 @@ module.exports = (grunt) ->
         tasks: ["parallelize:concat:js"]
       sass:
         files: "src/scss/**/*.scss"
-        tasks: ["parallelize:compass:dev"]
+        tasks: ["compassMutiple:dev"]
       css:
         files: [
           "bin/css/**/*.css"
@@ -183,7 +183,7 @@ module.exports = (grunt) ->
       'parallelize:copy:font'
       'parallelize:jade:default'
       'parallelize:coffee:default'
-      'compass:pro'
+      'compassMutiple:pro'
       'parallelize:htmlmin:default'
       'parallelize:concat:css'
       'parallelize:concat:js'
