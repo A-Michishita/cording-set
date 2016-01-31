@@ -92,7 +92,7 @@ module.exports = (grunt) ->
           dest:   'release/img/'
         ]
     clean:
-      deleteReleaseDir:
+      release:
         src: 'release/'
     copy:
       font:
@@ -148,7 +148,6 @@ module.exports = (grunt) ->
     parallelize:
       options:
         processes: 4
-      compass:  true
       coffee:   true
       concat:   true
       cssmin:   true
@@ -156,6 +155,10 @@ module.exports = (grunt) ->
       jade:     true
       htmlmin:  true
       image:    true
+      clean:    true
+      copy:     true
+      compress: true
+      watch:    true
     
     for t of pkg.devDependencies
       if t.substring(0, 6) is 'grunt-'
@@ -163,17 +166,18 @@ module.exports = (grunt) ->
 
     grunt.registerTask 'default', ["browserSync:dev", "watch"]
     grunt.registerTask 'release', [
-      'clean'
-      'copy'
-      'jade'
-      'coffee'
+      'parallelize:clean:release'
+      'parallelize:copy:font'
+      'parallelize:jade:default'
+      'parallelize:coffee:default'
       'compass:pro'
-      'htmlmin'
-      'concat'
+      'parallelize:htmlmin:default'
+      'parallelize:concat:css'
+      'parallelize:concat:js'
       'autoprefixer'
-      'uglify'
-      'cssmin'
-      'image:pro'
-      'compress'
+      'parallelize:uglify:default'
+      'parallelize:cssmin:default'
+      'parallelize:image:pro'
+      'parallelize:compress:default'
       "browserSync:pro"
     ]
