@@ -111,28 +111,28 @@ module.exports = (grunt) ->
     watch:
       coffee:
         files: "src/coffee/**/*.coffee"
-        tasks: ["coffee"]
+        tasks: ["parallelize:coffee:default"]
       js:
         files: [
           "bin/js/**/*.js"
           "!bin/js/**/app.js"
         ]
-        tasks: ["concat:js"]
+        tasks: ["parallelize:concat:js"]
       sass:
         files: "src/scss/**/*.scss"
-        tasks: ["compass:dev"]
+        tasks: ["parallelize:compass:dev"]
       css:
         files: [
           "bin/css/**/*.css"
           "!bin/css/**/app.css"
         ]
-        tasks: ["concat:css","autoprefixer"]
+        tasks: ["parallelize:concat:css","autoprefixer"]
       jade:
         files: "src/jade/**/*.jade"
-        tasks: ["jade"]
+        tasks: ["parallelize:jade:default"]
       image:
         files: "src/img/**/*.{png,jpg,gif}"
-        tasks: ["image:dev"]
+        tasks: ["parallelize:image:dev"]
     browserSync:
       dev:
         bsFiles:
