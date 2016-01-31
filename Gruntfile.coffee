@@ -1,6 +1,19 @@
 module.exports = (grunt) ->
   pkg = grunt.file.readJSON 'package.json'
   grunt.initConfig
+    compassMultiple:
+      dev:
+        options:
+          config:       'config.rb'
+          environment:  'development'
+          force:        true
+          sassDir:      './src/scss/'
+      pro:
+        options:
+          config:       'config.rb'
+          environment:  'production'
+          force:        true
+          sassDir:      './src/scss/'
     compass:
       dev:
         options:
