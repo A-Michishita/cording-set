@@ -14,17 +14,6 @@ module.exports = (grunt) ->
           environment:  'production'
           force:        true
           sassDir:      './src/scss/'
-    compass:
-      dev:
-        options:
-          config:       'config.rb'
-          environment:  'development'
-          force:        true
-      pro:
-        options:
-          config:       'config.rb'
-          environment:  'production'
-          force:        true
     coffee:
       default:
         files: [
@@ -133,7 +122,7 @@ module.exports = (grunt) ->
         tasks: ["parallelize:concat:js"]
       sass:
         files: "src/scss/**/*.scss"
-        tasks: ["compassMutiple:dev"]
+        tasks: ["compassMultiple:dev"]
       css:
         files: [
           "bin/css/**/*.css"
